@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int score1 = 0;    // score keeper variable for team 1
-    private int score2 = 0;     // score keeper variable for team 2
+    private int mscore1 = 0;    // score keeper variable for team 1
+    private int mscore2 = 0;     // score keeper variable for team 2
 
     private TextView mScoreText1;
     private TextView mScoreText2;
@@ -26,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
         mScoreText1 = findViewById(R.id.score1);
         mScoreText2 = findViewById(R.id.score2);
 
+        // getting the save value
+        if(savedInstanceState != null) {
+            mscore1 = savedInstanceState.getInt("score_1");
+            mscore2 = savedInstanceState.getInt("score_2");
+
+            // set the saved value to views
+            mScoreText1.setText(String.valueOf(mscore1));
+            mScoreText2.setText(String.valueOf(mscore2));
+        }
     }
 
     @Override
@@ -46,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+
+        // saving the state for variables score1 and score2
+        outState.putInt("score_1", mscore1);
+        outState.putInt("score_2",mscore2);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId() == R.id.change_mode) {   // clicked on night mode button
@@ -62,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
             // recreate the activity so changes may applied
-            recreate();
+            recreate();            // we have to save instance as we are recreating the acitivity
         }
         return true;
     }
@@ -72,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch(view.getId()) {
 
-            case R.id.decreaseTeam1: score1--;
-                mScoreText1.setText(String.valueOf(score1));
+            case R.id.decreaseTeam1: mscore1--;
+                mScoreText1.setText(String.valueOf(mscore1));
                 break;
 
-            case R.id.decreaseTeam2: score2--;
-                mScoreText2.setText(String.valueOf(score2));
+            case R.id.decreaseTeam2: mscore2--;
+                mScoreText2.setText(String.valueOf(mscore2));
         }
     }
 
@@ -85,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch(view.getId()) {
 
-            case R.id.increaseTeam1: score1++;
-                mScoreText1.setText(String.valueOf(score1));
+            case R.id.increaseTeam1: mscore1++;
+                mScoreText1.setText(String.valueOf(mscore1));
                 break;
 
-            case R.id.increaseTeam2: score2++;
-                mScoreText2.setText(String.valueOf(score2));
+            case R.id.increaseTeam2: mscore2++;
+                mScoreText2.setText(String.valueOf(mscore2));
         }
     }
 }
