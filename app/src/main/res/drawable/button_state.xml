@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--called when button is pressed-->
+    <item android:state_pressed="true"
+          android:drawable="@drawable/fill_clr_in_btn">
+    </item>
+
+</selector>
